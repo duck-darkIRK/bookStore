@@ -1,4 +1,3 @@
-// src/book/book.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,5 +13,18 @@ export class BookService {
       throw new NotFoundException(`Book with ID ${id} not found`);
     }
     return book;
+  }
+
+  // async searchBooksByName(name: string): Promise<string[]> {
+  //   const regex = new RegExp(name, 'i'); // 'i' for case-insensitive
+  //   const books = await this.bookModel.find({ name: { $regex: regex } }).exec();
+  //   return books.map(book => book.id);
+  // }
+
+
+  async searchBooksByName(name: string): Promise<string[]> {
+    const regex = new RegExp(`\\b${name}\\b`, 'iu');
+    const books = await this.bookModel.find({ name: regex }).exec();
+    return books.map(book => book.id);
   }
 }

@@ -6,7 +6,7 @@ import { Book, BookSchema } from './entities/book.entity';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: Book.name, schema: BookSchema }])],
+  controllers: [BookController],
   providers: [BookService],
-  controllers: [BookController]
 })
 export class BookModule {}
