@@ -7,16 +7,10 @@ import { SearchBookDto } from './dto/search-book.dto';
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 
-  @Get(':id')
-  async getBookById(@Param('id') id: string): Promise<Book> {
-    return this.bookService.getBookById(id);
+  @Get('allBooks')
+  async getAllBooks() {
+    return this.bookService.findAll();
   }
-
-  // @Get('searchBook')
-  // async searchBook(@Query('name') name: string) {
-  //   const bookIds = await this.bookService.searchBooksByName(name);
-  //   return { bookIds };
-  // }
 
   @Post('searchBook')
   async searchBook(@Body() searchBookDto: SearchBookDto) {
@@ -25,4 +19,11 @@ export class BookController {
     const bookIds = await this.bookService.searchBooksByName(name);
     return { bookIds };
   }
+  
+  @Get(':id')
+  async getBookById(@Param('id') id: string): Promise<Book> {
+    return this.bookService.getBookById(id);
+  }
+
+
 }

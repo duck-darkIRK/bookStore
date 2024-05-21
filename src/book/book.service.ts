@@ -15,16 +15,16 @@ export class BookService {
     return book;
   }
 
-  // async searchBooksByName(name: string): Promise<string[]> {
-  //   const regex = new RegExp(name, 'i'); // 'i' for case-insensitive
-  //   const books = await this.bookModel.find({ name: { $regex: regex } }).exec();
-  //   return books.map(book => book.id);
-  // }
 
 
   async searchBooksByName(name: string): Promise<string[]> {
     const regex = new RegExp(`\\b${name}\\b`, 'iu');
     const books = await this.bookModel.find({ name: regex }).exec();
     return books.map(book => book.id);
+  }
+
+
+  async findAll() : Promise<Book[]> {
+    return this.bookModel.find().exec();
   }
 }
